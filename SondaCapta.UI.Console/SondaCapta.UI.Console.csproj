@@ -14,4 +14,10 @@
     <ProjectReference Include="..\SondaCapta.Domain\SondaCapta.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
