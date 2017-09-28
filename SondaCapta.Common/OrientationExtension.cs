@@ -37,5 +37,22 @@ namespace SondaCapta.Common
                     throw new NotImplementedException("Orientation not implemented");
             }
         }
+
+        public static string GetabbreviatedRepresentation(this Orientation orientation)
+        {
+            switch (orientation)
+            {
+                case Orientation.North:
+                    return "N";
+                case Orientation.East:
+                    return "E";
+                case Orientation.South:
+                    return "S";
+                case Orientation.West:
+                    return "W";
+                default:
+                    throw new NotImplementedException("Orientation not implemented");
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@ using SondaCapta.Domain.Abstractions;
 using System;
 using System.Linq;
 using System.IO;
+using SondaCapta.Common;
 
 namespace SondaCapta.UI.Console
 {
@@ -53,7 +54,6 @@ namespace SondaCapta.UI.Console
                             EndProgram();
                             return;
                         }
-
                     }
                 }
             }
@@ -69,11 +69,7 @@ namespace SondaCapta.UI.Console
 
         private static void PrintProbePosition(IProbe probe)
         {
-            char orientation;
-
-            orientation = probe.Position.Orientation.ToString().ToUpper().First();
-
-            System.Console.WriteLine($"{probe.Position.X} {probe.Position.Y} {orientation}");
+            System.Console.WriteLine($"{probe.Position.X} {probe.Position.Y} {probe.Position.Orientation.GetabbreviatedRepresentation()}");
         }
 
         private static void EndProgram()
