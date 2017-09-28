@@ -8,16 +8,19 @@ namespace SondaCapta.Domain
 {
     public class ProbeFactory : IProbeFactory
     {
-        private ISystemConfiguration _config;
+        private ISystemConfigurationProvider _configProvider;
 
-        public ProbeFactory(ISystemConfiguration configuration)
+        public ProbeFactory(ISystemConfigurationProvider configurationProvider)
         {
-            _config = configuration;
+            _configProvider = configurationProvider;
         }
 
         public IProbe CreateProbe(Position position)
         {
-            return new Probe(_config.Land, position);
+            if (!_configProvider.IsConfigured)
+                throw new InvalidOperationException("The system must be configured to create a probe");
+
+            return new Probe(_configProvider.Configuration.Land, position);
         }
     }
 }

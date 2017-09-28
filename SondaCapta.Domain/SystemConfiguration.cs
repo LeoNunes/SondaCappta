@@ -5,8 +5,13 @@ using System.Text;
 
 namespace SondaCapta.Domain
 {
-    public class SystemConfiguration : ISystemConfiguration
+    internal class SystemConfiguration : ISystemConfiguration
     {
-        public ILand Land { get; set; }
+        public SystemConfiguration(ILand land)
+        {
+            Land = land;
+        }
+
+        public ILand Land { get; private set; }
     }
 }

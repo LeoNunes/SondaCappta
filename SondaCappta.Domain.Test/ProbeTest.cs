@@ -13,11 +13,12 @@ namespace SondaCappta.Domain.Test
         [TestInitialize]
         public void Initialize()
         {
-            ISystemConfiguration config = new SystemConfiguration();
             ILandFactory landFactory = new LandFactory();
-            config.Land = landFactory.CreateRectangularLand(50, 0, 50, 0);
 
-            _probeFactory = new ProbeFactory(config);
+            ISystemConfigurationProvider configProvider = new SystemConfigurationProvider();
+            configProvider.ConfigurationBuilder.SetLand(landFactory.CreateRectangularLand(50, 0, 50, 0)).Build();
+
+            _probeFactory = new ProbeFactory(configProvider);
         }
 
         [TestMethod]
