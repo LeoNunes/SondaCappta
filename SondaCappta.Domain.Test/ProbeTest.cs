@@ -87,6 +87,16 @@ namespace SondaCappta.Domain.Test
         }
 
         [TestMethod]
+        public void CreateProbeOutOfLandTest()
+        {
+            IProbe probe1 = _probeFactory.CreateProbe(new Position(100, 0, Orientation.South));
+            IProbe probe2 = _probeFactory.CreateProbe(new Position(0, 100, Orientation.North));
+
+            Assert.IsTrue(probe1.IsCrashed);
+            Assert.IsTrue(probe2.IsCrashed);
+        }
+
+        [TestMethod]
         public void ProbeCrashTest()
         {
             IProbe probe1 = _probeFactory.CreateProbe(new Position(10, 0, Orientation.South));
@@ -94,51 +104,34 @@ namespace SondaCappta.Domain.Test
             IProbe probe3 = _probeFactory.CreateProbe(new Position(50, 10, Orientation.East));
             IProbe probe4 = _probeFactory.CreateProbe(new Position(10, 50, Orientation.North));
 
-            bool crash1 = false;
-            bool crash2 = false;
-            bool crash3 = false;
-            bool crash4 = false;
+            probe1.Move();
+            probe2.Move();
+            probe3.Move();
+            probe4.Move();
+
+            Assert.IsTrue(probe1.IsCrashed);
+            Assert.IsTrue(probe2.IsCrashed);
+            Assert.IsTrue(probe3.IsCrashed);
+            Assert.IsTrue(probe4.IsCrashed);
+        }
+
+        [TestMethod]
+        public void MovingCrashedProbeTest()
+        {
+            IProbe probe = _probeFactory.CreateProbe(new Position(100, 0, Orientation.North));
+
+            bool exception = false;
 
             try
             {
-                probe1.Move();
+                probe.Move();
             }
-            catch (ProbeCrashException)
+            catch (ProbeCrashedException)
             {
-                crash1 = true;
+                exception = true;
             }
 
-            try
-            {
-                probe2.Move();
-            }
-            catch (ProbeCrashException)
-            {
-                crash2 = true;
-            }
-
-            try
-            {
-                probe3.Move();
-            }
-            catch (ProbeCrashException)
-            {
-                crash3 = true;
-            }
-
-            try
-            {
-                probe4.Move();
-            }
-            catch (ProbeCrashException)
-            {
-                crash4 = true;
-            }
-
-            Assert.IsTrue(crash1);
-            Assert.IsTrue(crash2);
-            Assert.IsTrue(crash3);
-            Assert.IsTrue(crash4);
+            Assert.IsTrue(exception);
         }
     }
 }
