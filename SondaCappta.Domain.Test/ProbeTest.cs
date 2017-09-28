@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SondaCapta.Common;
 using SondaCapta.Domain;
@@ -9,24 +10,37 @@ namespace SondaCappta.Domain.Test
     [TestClass]
     public class ProbeTest
     {
+        IServiceProvider _serviceProvider;
         IProbeFactory _probeFactory;
 
         [TestInitialize]
         public void Initialize()
         {
-            ILandFactory landFactory = new LandFactory();
+            IServiceCollection serviceCollection = new ServiceCollection();
+            serviceCollection.AddSingleton<ISystemConfigurationProvider, SystemConfigurationProvider>();
+            serviceCollection.AddSingleton<IProbeFactory, ProbeFactory>();
+            serviceCollection.AddSingleton<ILandFactory, LandFactory>();
 
-            ISystemConfigurationProvider configProvider = new SystemConfigurationProvider();
+            _serviceProvider = serviceCollection.BuildServiceProvider();
+
+            ILandFactory landFactory = _serviceProvider.GetService<ILandFactory>();
+            ISystemConfigurationProvider configProvider = _serviceProvider.GetService<ISystemConfigurationProvider>();
+
             configProvider.ConfigurationBuilder.SetLand(landFactory.CreateRectangularLand(50, 0, 50, 0)).Build();
 
-            _probeFactory = new ProbeFactory(configProvider);
+            _probeFactory = _serviceProvider.GetService<IProbeFactory>();
         }
 
         [TestMethod]
         public void SystemNotConfiguredCreationTest()
         {
-            ISystemConfigurationProvider configProvider = new SystemConfigurationProvider();
-            IProbeFactory probeFactory = new ProbeFactory(configProvider);
+            IServiceCollection serviceCollection = new ServiceCollection();
+            serviceCollection.AddSingleton<ISystemConfigurationProvider, SystemConfigurationProvider>();
+            serviceCollection.AddSingleton<IProbeFactory, ProbeFactory>();
+            IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
+
+            ISystemConfigurationProvider configProvider = serviceProvider.GetService<ISystemConfigurationProvider>();
+            IProbeFactory probeFactory = serviceProvider.GetService<IProbeFactory>();
 
             bool exception = false;
 

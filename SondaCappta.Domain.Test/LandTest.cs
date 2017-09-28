@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Extensions.DependencyInjection;
 using SondaCapta.Domain;
 using SondaCapta.Domain.Abstractions;
 using System;
@@ -8,12 +9,17 @@ namespace SondaCappta.Domain.Test
     [TestClass]
     public class LandTest
     {
+        IServiceProvider _serviceProvider;
         ILandFactory _landFactory;
 
         [TestInitialize]
         public void Initialize()
         {
-            _landFactory = new LandFactory();
+            IServiceCollection serviceCollection = new ServiceCollection();
+            serviceCollection.AddSingleton<ILandFactory, LandFactory>();
+            _serviceProvider = serviceCollection.BuildServiceProvider();
+
+            _landFactory = _serviceProvider.GetService<ILandFactory>();
         }
 
         [TestMethod]
