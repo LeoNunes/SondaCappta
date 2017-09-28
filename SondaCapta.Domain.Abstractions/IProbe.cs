@@ -1,5 +1,4 @@
 ﻿using SondaCapta.Common;
-using System;
 
 namespace SondaCapta.Domain.Abstractions
 {

@@ -1,7 +1,5 @@
 ﻿using SondaCapta.Domain.Abstractions;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using SondaCapta.Common;
 
 namespace SondaCapta.Domain

@@ -1,9 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SondaCapta.Domain;
 using SondaCapta.Domain.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SondaCappta.Domain.Test
 {

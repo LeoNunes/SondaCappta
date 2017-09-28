@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SondaCapta.Common
+﻿namespace SondaCapta.Common
 {
     public struct Position
     {
