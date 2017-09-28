@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SondaCapta.Common;
 using SondaCapta.Domain;
 using SondaCapta.Domain.Abstractions;
+using System;
 
 namespace SondaCappta.Domain.Test
 {
@@ -33,7 +34,7 @@ namespace SondaCappta.Domain.Test
             {
                 probeFactory.CreateProbe(new Position(0, 0, Orientation.North));
             }
-            catch
+            catch (InvalidOperationException)
             {
                 exception = true;
             }

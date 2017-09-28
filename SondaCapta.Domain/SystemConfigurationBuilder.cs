@@ -9,9 +9,9 @@ namespace SondaCapta.Domain
         private ILand _land = null;
         private object _configLock = new object();
 
-        public SystemConfigurationBuilder(SystemConfigurationProvider configProvider)
+        public SystemConfigurationBuilder(SystemConfigurationProvider configurationProvider)
         {
-            _configProvider = configProvider;
+            _configProvider = configurationProvider;
         }
 
         public event EventHandler<ISystemConfiguration> ConfigurationBuilded;

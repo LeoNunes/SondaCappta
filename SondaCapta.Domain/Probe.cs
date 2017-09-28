@@ -14,10 +14,7 @@ namespace SondaCapta.Domain
 
             Position = startPosition;
 
-            if (land.IsInside(startPosition.X, startPosition.Y))
-                IsCrashed = false;
-            else
-                IsCrashed = true;
+            IsCrashed = !land.IsInside(startPosition.X, startPosition.Y);
         }
 
         public Position Position { get; private set; }
