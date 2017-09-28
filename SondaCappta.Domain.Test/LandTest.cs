@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SondaCapta.Domain;
 using SondaCapta.Domain.Abstractions;
 using System;
 
@@ -12,7 +13,7 @@ namespace SondaCappta.Domain.Test
         [TestInitialize]
         public void Initialize()
         {
-
+            _landFactory = new LandFactory();
         }
 
         [TestMethod]

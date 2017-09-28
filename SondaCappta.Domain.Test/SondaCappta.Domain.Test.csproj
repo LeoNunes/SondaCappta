@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SondaCapta.Domain.Abstractions\SondaCapta.Domain.Abstractions.csproj" />
+    <ProjectReference Include="..\SondaCapta.Domain\SondaCapta.Domain.csproj" />
   </ItemGroup>
 
 </Project>
