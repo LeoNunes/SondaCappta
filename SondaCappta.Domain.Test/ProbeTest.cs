@@ -12,7 +12,10 @@ namespace SondaCappta.Domain.Test
         [TestInitialize]
         public void Initialize()
         {
+            ILandFactory landFactory = null;
+            ISystemConfiguration config = null;
 
+            config.Land = landFactory.CreateRectangularLand(50, 0, 50, 0);
         }
 
         [TestMethod]
@@ -81,6 +84,61 @@ namespace SondaCappta.Domain.Test
             Assert.AreEqual(new Position(10, 9, Orientation.South), probe2.Position);
             Assert.AreEqual(new Position(11, 10, Orientation.East), probe3.Position);
             Assert.AreEqual(new Position(9, 10, Orientation.West), probe4.Position);
+        }
+
+        [TestMethod]
+        public void ProbeCrashTest()
+        {
+            IProbe probe1 = _probeFactory.CreateProbe(new Position(10, 0, Orientation.South));
+            IProbe probe2 = _probeFactory.CreateProbe(new Position(0, 10, Orientation.West));
+            IProbe probe3 = _probeFactory.CreateProbe(new Position(50, 10, Orientation.East));
+            IProbe probe4 = _probeFactory.CreateProbe(new Position(10, 50, Orientation.North));
+
+            bool crash1 = false;
+            bool crash2 = false;
+            bool crash3 = false;
+            bool crash4 = false;
+
+            try
+            {
+                probe1.Move();
+            }
+            catch (ProbeCrashException)
+            {
+                crash1 = true;
+            }
+
+            try
+            {
+                probe2.Move();
+            }
+            catch (ProbeCrashException)
+            {
+                crash2 = true;
+            }
+
+            try
+            {
+                probe3.Move();
+            }
+            catch (ProbeCrashException)
+            {
+                crash3 = true;
+            }
+
+            try
+            {
+                probe4.Move();
+            }
+            catch (ProbeCrashException)
+            {
+                crash4 = true;
+            }
+
+            Assert.IsTrue(crash1);
+            Assert.IsTrue(crash2);
+            Assert.IsTrue(crash3);
+            Assert.IsTrue(crash4);
         }
     }
 }
