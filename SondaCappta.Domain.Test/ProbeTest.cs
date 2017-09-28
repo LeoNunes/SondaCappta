@@ -22,6 +22,26 @@ namespace SondaCappta.Domain.Test
         }
 
         [TestMethod]
+        public void SystemNotConfiguredCreationTest()
+        {
+            ISystemConfigurationProvider configProvider = new SystemConfigurationProvider();
+            IProbeFactory probeFactory = new ProbeFactory(configProvider);
+
+            bool exception = false;
+
+            try
+            {
+                probeFactory.CreateProbe(new Position(0, 0, Orientation.North));
+            }
+            catch
+            {
+                exception = true;
+            }
+
+            Assert.IsTrue(exception);
+        }
+
+        [TestMethod]
         public void CreateProbePositionTest()
         {
             Position creationPosition1 = new Position(10, 20, Orientation.East);
