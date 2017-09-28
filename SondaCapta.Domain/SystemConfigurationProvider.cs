@@ -7,10 +7,22 @@ namespace SondaCapta.Domain
 {
     public class SystemConfigurationProvider : ISystemConfigurationProvider
     {
-        public ISystemConfigurationBuilder ConfigurationBuilder => throw new NotImplementedException();
+        public SystemConfigurationProvider()
+        {
+            SystemConfigurationBuilder builder = new SystemConfigurationBuilder(this);
+            builder.ConfigurationBuilded += ConfigurationBuilded;
+            ConfigurationBuilder = builder;
+        }
 
-        public bool IsConfigured => throw new NotImplementedException();
+        public ISystemConfigurationBuilder ConfigurationBuilder { get; private set; }
 
-        public ISystemConfiguration Configuration => throw new NotImplementedException();
+        public bool IsConfigured { get; private set; }
+        public ISystemConfiguration Configuration { get; private set; }
+
+        private void ConfigurationBuilded(object sender, ISystemConfiguration e)
+        {
+            IsConfigured = true;
+            Configuration = e;
+        }
     }
 }
