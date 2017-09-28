@@ -45,7 +45,12 @@ namespace SondaCapta.UI.Console
                         try
                         {
                             IProbe probe = _interpreter.CreateProbe(probeCreation);
-                            _interpreter.CommandProbe(probe, probeCommand);
+                            try
+                            {
+                                _interpreter.CommandProbe(probe, probeCommand);
+                            }
+                            catch (ProbeCrashedException)
+                            { }
                             PrintProbePosition(probe);
                         }
                         catch (Exception e)
@@ -69,7 +74,10 @@ namespace SondaCapta.UI.Console
 
         private static void PrintProbePosition(IProbe probe)
         {
-            System.Console.WriteLine($"{probe.Position.X} {probe.Position.Y} {probe.Position.Orientation.GetabbreviatedRepresentation()}");
+            if (probe.IsCrashed)
+                System.Console.WriteLine($"Probe Crashed! Final position: ({probe.Position.X} {probe.Position.Y} {probe.Position.Orientation.GetabbreviatedRepresentation()})");
+            else
+                System.Console.WriteLine($"{probe.Position.X} {probe.Position.Y} {probe.Position.Orientation.GetabbreviatedRepresentation()}");
         }
 
         private static void EndProgram()
